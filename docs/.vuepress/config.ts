@@ -1,73 +1,94 @@
-import { defineUserConfig } from "vuepress";
-import type { DefaultThemeOptions } from "vuepress";
-import type { SidebarConfig } from "@vuepress/theme-default";
-let sidebar: SidebarConfig = {
-  "/": [
-    {
-      text: "开始",
-      collapsible: true,
-      children: [
-        "/intro.md",
-        "/let.md",
-        "/destructuring.md",
-        "/string.md",
-        "/regex.md",
-        "/number.md",
-        "/function.md",
-        "/array.md",
-        "/object.md",
-        "/object-methods.md",
-        "/symbol.md",
-        "/set-map.md",
-        "/proxy.md",
-        "/reflect.md",
-        "/promise.md",
-        "/iterator.md",
-        "/generator.md",
-        "/generator-async.md",
-        "/async.md",
-        "/class.md",
-        "/class-extends.md",
-        "/module.md",
-        "/module-loader.md",
-        "/style.md",
-        "/spec.md",
-        "/arraybuffer.md",
-        "/proposals.md",
-        "/decorator.md",
-        "/reference.md",
-      ],
-    },
-  ],
-};
-export default defineUserConfig<DefaultThemeOptions>({
-  // 站点配置
-  lang: "zh-CN",
-  base: "/es6tutorial/",
-  title: "你好， VuePress ！",
-  description: "这是我的第一个 VuePress 站点",
-  plugins: [
-    ["@snippetors/vuepress-plugin-tabs", {}],
-    ["@snippetors/vuepress-plugin-code-copy", {}],
-  ],
-  // 主题和它的配置
-  theme: "@vuepress/theme-default",
-  themeConfig: {
-    logo: "https://vuejs.org/images/logo.png",
-    navbar: [
-      // NavbarItem
-      {
-        text: "总结",
-        link: "/SUMMARY.md",
-      },
-      {
-        text: "kali",
-        link: "/SUMMARY.md",
-      },
-      // NavbarGroup
+import { defineHopeConfig } from "vuepress-theme-hope";
+import themeConfig from "./themeConfig";
+export default defineHopeConfig({
+  base: "/wangdoc/",
 
-      // 字符串 - 页面文件路径
+  dest: "./dist",
+
+  head: [
+    [
+      "link",
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "16x16",
+        href: `/images/logo.png`,
+      },
     ],
-    sidebar: sidebar,
+    [
+      "link",
+      {
+        rel: "stylesheet",
+        href: "//at.alicdn.com/t/font_2410206_mfj6e1vbwo.css",
+      },
+    ],
+    [
+      "link",
+      //我的iconfont库
+      {
+        rel: "stylesheet",
+        href: "//at.alicdn.com/t/font_3267094_j92iwdcfcxp.css",
+      },
+    ],
+  ],
+
+  locales: {
+    "/": {
+      lang: "zh-CN",
+      title: "wangdoc",
+      description: "wangdoc",
+    },
   },
+
+  themeConfig,
+  plugins: [
+    [
+      "@vuepress/plugin-search",
+      {
+        locales: {
+          "/": {
+            placeholder: "搜索文档",
+            translations: {
+              button: {
+                buttonText: "搜索文档",
+                buttonAriaLabel: "搜索文档",
+              },
+              modal: {
+                searchBox: {
+                  resetButtonTitle: "清除查询条件",
+                  resetButtonAriaLabel: "清除查询条件",
+                  cancelButtonText: "取消",
+                  cancelButtonAriaLabel: "取消",
+                },
+                startScreen: {
+                  recentSearchesTitle: "搜索历史",
+                  noRecentSearchesText: "没有搜索历史",
+                  saveRecentSearchButtonTitle: "保存至搜索历史",
+                  removeRecentSearchButtonTitle: "从搜索历史中移除",
+                  favoriteSearchesTitle: "收藏",
+                  removeFavoriteSearchButtonTitle: "从收藏中移除",
+                },
+                errorScreen: {
+                  titleText: "无法获取结果",
+                  helpText: "你可能需要检查你的网络连接",
+                },
+                footer: {
+                  selectText: "选择",
+                  navigateText: "切换",
+                  closeText: "关闭",
+                  searchByText: "搜索提供者",
+                },
+                noResultsScreen: {
+                  noResultsText: "无法找到相关结果",
+                  suggestedQueryText: "你可以尝试查询",
+                  openIssueText: "你认为该查询应该有结果？",
+                  openIssueLinkText: "点击反馈",
+                },
+              },
+            },
+          },
+        },
+      },
+    ],
+  ],
 });

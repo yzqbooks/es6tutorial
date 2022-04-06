@@ -1,27 +1,72 @@
-# ECMAScript 6 入门
+---
+home: true
+title: 首页
+heroImage: /images/hero.png
+actions:
+  - text: es6基础 💡
+    link: /es6-tutorial/
+    type: primary
+  - text: css进阶
+    link: /css-tutorial/
+    type: secondary
+   
+features:
+  - title: cs-guide
+    details: 计算机技术教程
+    icon: computer
+    link: https://yzqdev.github.io/cs-guide
+ 
+  - title: linux基础
+    details: linux基础教程
+    icon: linux
+    link: /base/
+  - title: git教程
+    details: 一个简单的git教程
+    icon: git
+    link: https://yzqdev.github.io/git-tutor  
+  - title: nodejs教程
+    details: 一个简单的node教程
+    icon: nodeJS
+    link: https://yzqdev.github.io/node-tutor  
+  - title: 安卓教程
+    details: 一个简单的安卓教程
+    icon: android
+    link: https://yzqdev.github.io/android-docs
+  - title: wangdoc教程
+    details: wangdoc教程
+    icon: android
+    link: https://yzqbooks.github.io/wangdoc
+footer: MIT Licensed | Copyright © 2022-present yzqdev
+---
 
-《ECMAScript 6 入门》是一本开源的 JavaScript 语言教程，全面介绍 ECMAScript 6 新引入的语法特性。
+:::tip
+来源[https://github.com/wangdoc](https://github.com/wangdoc),由[yzqdev](https://github.com/yzqdev)重新梳理
+:::
+下面是wangdoc的介绍  
+网道（WangDoc.com）是一个文档网站，提供互联网软件开发文档，正在建设中。
 
-[![cover](./images/cover_thumbnail_3rd.jpg)](./images/cover-3rd.jpg)
+### 目标 [#](https://wangdoc.com/#目标)
 
-本书覆盖 ES6 与上一个版本 ES5 的所有不同之处，对涉及的语法知识给予详细介绍，并给出大量简洁易懂的示例代码。
+这个项目的目标是，提供高质量的、拥有自主版权的、可以自由使用的中文软件文档。
 
-本书为中级难度，适合已经掌握 ES5 的读者，用来了解这门语言的最新发展；也可当作参考手册，查寻新增的语法点。如果你是 JavaScript 语言的初学者，建议先学完[《JavaScript 语言入门教程》](https://wangdoc.com/javascript/)，再来看本书。
+我们的追求是：
 
-全书已由电子工业出版社出版，2017年9月推出了第三版，书名为《ES6 标准入门》。纸版是基于网站内容排版印刷的。
+> “复杂的技术，简单的讲解。”
 
-感谢张春雨编辑支持我将全书开源的做法。如果您认可这本书，建议购买纸版。这样可以使出版社不因出版开源书籍而亏钱，进而鼓励更多的作者开源自己的书籍。下面是第三版的购买地址。
+### 自由使用 [#](https://wangdoc.com/#自由使用)
 
-- [淘宝](https://s.taobao.com/search?q=ES6%E6%A0%87%E5%87%86%E5%85%A5%E9%97%A8+%E7%AC%AC3%E7%89%88)
-- [京东](https://search.jd.com/Search?keyword=ES6%E6%A0%87%E5%87%86%E5%85%A5%E9%97%A8%20%E7%AC%AC3%E7%89%88&enc=utf-8&wq=ES6%E6%A0%87%E5%87%86%E5%85%A5%E9%97%A8%20%E7%AC%AC3%E7%89%88)
-- [当当](http://product.dangdang.com/25156888.html)
-- [亚马逊](https://www.amazon.cn/ES6%E6%A0%87%E5%87%86%E5%85%A5%E9%97%A8-%E9%98%AE%E4%B8%80%E5%B3%B0/dp/B0755547ZZ)
-- [China-pub](http://product.china-pub.com/6504650)
+网站的所有内容采用知识共享 3.0 许可证，与维基百科相同。
 
-### 版权许可
+你可以自由使用本站所有内容（包括用于商业用途），不必支付任何费用，条件是使用时保持署名（“来自网道项目”），以及采用相同方式共享。
 
-本书采用“保持署名—非商用”创意共享4.0许可证。
+你也许会问，为什么要做一个自由使用的文档网站？
 
-只要保持原作者署名和非商用，您可以自由地阅读、分享、修改本书。
+回答是，为什么不呢。知识不同于其他物品，会越用越多。使用这些文档的人越多，它们就越有价值，我们努力让大家多消费这些文档。
 
-详细的法律条文请参见[创意共享](http://creativecommons.org/licenses/by-nc/4.0/)网站。
+### 开放源码 [#](https://wangdoc.com/#开放源码)
+
+这个网站的所有页面，源码都是开放的，包括你现在看到的[这个页面](https://raw.githubusercontent.com/wangdoc/frontpage/master/README.md)。
+
+所有文档仓库都托管在 [GitHub](https://github.com/wangdoc)，你可以在那里追踪项目进展。欢迎大家参与文档写作和维护，你可以克隆源码仓库，提交 Pull Request，或者通过 Issue 反映问题。
+
+我们采用[《中文技术文档写作规范》](https://github.com/ruanyf/document-style-guide)。
