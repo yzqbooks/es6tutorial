@@ -9,6 +9,7 @@ export default defineNavbarConfig([
 
   { text: "css教程", icon: "css", link: "/css-tutorial/" },
   { text: "es6教程", icon: "es6", link: "/es6-tutorial/" },
+  { text: "js教程", icon: "javascript", link: "/javascript-tutorial/" },
   { text: "git教程", icon: "git", link: "/git-tutorial/" },
   { text: "html教程", icon: "html", link: "/html-tutorial/" },
 

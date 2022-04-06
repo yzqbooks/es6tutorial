@@ -16,7 +16,7 @@ export default defineThemeConfig({
 
   repo: "https://github.com/yzqbooks/wangdoc",
 
-  // docsDir: "demo/src",
+  docsDir: "docs",
 
   // navbar
   navbar: navbar,

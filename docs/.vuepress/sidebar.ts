@@ -6,6 +6,7 @@ export default defineSidebarConfig({
   "/clang-tutorial/": "structure",
   "/css-tutorial/": "structure",
   "/es6-tutorial/": "structure",
+  "/javascript-tutorial/": "structure",
   "/git-tutorial/": "structure",
   "/html-tutorial/": "structure",
   "/node-tutorial/": "structure",

@@ -23,7 +23,7 @@ build/
 out/
 log/
 logs/
-public/
+
 target/
 node_modules/
 classes/

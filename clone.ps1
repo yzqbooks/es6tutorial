@@ -1,9 +1,10 @@
 $prefix = 'https://github.com/wangdoc/'
 $suffix = '.git'
 $cur = $PWD
-$gitRepos = 'bash-tutorial', 'git-tutorial', 'node-tutorial', 'clang-tutorial', 'css-tutorial', 'es6-tutorial', 'ssh-tutorial', 'html-tutorial', 'webapi-tutorial'
+$gitRepos = 'bash-tutorial', 'git-tutorial', 'node-tutorial', 'javascript-tutorial', 'clang-tutorial', 'css-tutorial', 'es6-tutorial', 'ssh-tutorial', 'html-tutorial', 'webapi-tutorial'
 # 这里填你的docs文件夹
-$dest = '.\docs\'
+ 
+$dest = 'E:\myblogs\wangdoc\docs\'
 # 系统临时文件路径
 $tmpPath = $env:tmp + '\wang\'
 Write-Host  '设置临时文件路径'$tmpPath -ForegroundColor Cyan
@@ -18,6 +19,8 @@ function cloneAll {
         Set-Location $item
         Copy-Item -Recurse -Force docs $dest$item
     } 
+    Set-Location $cur
+    delTmpPath
     
 }
 function cloneOnlyDocs {
@@ -28,7 +31,10 @@ function cloneOnlyDocs {
         
          
         Set-Location $item
+    
+        Write-Host '当前路径'$PWD -ForegroundColor Cyan
         if (Test-Path ".git" ) {
+            Write-Host  '已有git文件夹' -ForegroundColor Cyan
             switch ($item) {
                 'ssh-tutorial' {  
                     git pull origin main
@@ -40,9 +46,9 @@ function cloneOnlyDocs {
                     git pull origin master
                 }
             }
-              
+            Write-Host '从docs复制到'$dest$item -ForegroundColor Cyan
             # 注意下面的\文件夹分割
-            Copy-Item -Recurse -Force docs $dest\$item
+            Copy-Item  -Path 'docs'-Destination  $dest$item -Recurse -Force
             Set-Location ../
         }
         else {
@@ -50,7 +56,8 @@ function cloneOnlyDocs {
             git remote add origin $prefix$item$suffix
             # 设置允许克隆子目录
             git config core.sparsecheckout true 
-            Write-Host  '设置要克隆的仓库的子目录路径' -ForegroundColor Cyan
+            Write-Host  '没有git文件夹,正在克隆' -ForegroundColor Cyan
+            Write-Host '当前路径'$PWD -ForegroundColor Cyan
             Write-Output 'docs' >> '.git/info/sparse-checkout'  
             switch ($item) {
                 'ssh-tutorial' {  
@@ -64,11 +71,11 @@ function cloneOnlyDocs {
                 }
             }
             # 注意下面的\文件夹分割 -Force 覆盖文件
-            Copy-Item  -Recurse -Force docs $dest$item
+            Copy-Item  -Path 'docs'  -Destination  $dest$item -Recurse -Force
             Set-Location ../
         }
     } 
-    
+     
 }
 
 function delTmpPath {
