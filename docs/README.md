@@ -19,7 +19,7 @@ features:
   - title: linux基础
     details: linux基础教程
     icon: linux
-    link: /base/
+    link: https://yzqbooks.github.io/linux-tutorial 
   - title: git教程
     details: 一个简单的git教程
     icon: git

@@ -11,7 +11,7 @@ export default defineHopeConfig({
       {
         rel: "icon",
         type: "image/png",
-        sizes: "16x16",
+
         href: `/images/logo.png`,
       },
     ],
