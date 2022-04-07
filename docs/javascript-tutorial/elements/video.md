@@ -1,4 +1,4 @@
-# <video>，<audio>
+# `<video>，<audio>`
 
 ## 概述
 
@@ -151,4 +151,3 @@ if (a.canPlayType('audio/wav')) {
 - abort：停止加载媒体文件时触发，通常是用户主动要求停止下载。
 - error：网络或其他原因导致媒体文件无法加载时触发。
 - emptied：由于`error`或`abort`事件导致`networkState`属性变成无法获取数据时触发。
-

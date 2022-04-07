@@ -1,6 +1,7 @@
 $prefix = 'https://github.com/wangdoc/'
 $suffix = '.git'
 $cur = $PWD
+# 'javascript-tutorial'包含太多不规范的markdown语法
 $gitRepos = 'bash-tutorial', 'git-tutorial', 'node-tutorial', 'javascript-tutorial', 'clang-tutorial', 'css-tutorial', 'es6-tutorial', 'ssh-tutorial', 'html-tutorial', 'webapi-tutorial'
 # 这里填你的docs文件夹
  
