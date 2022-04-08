@@ -1,7 +1,7 @@
 ---
 home: true
 title: 首页
-heroImage: /images/hero.png
+heroImage: /images/wangdoc.png
 actions:
   - text: es6基础 💡
     link: /es6-tutorial/

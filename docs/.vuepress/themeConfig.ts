@@ -12,7 +12,7 @@ export default defineThemeConfig({
 
   iconPrefix: "iconfont icon-",
 
-  logo: "/ayaka.jpg",
+  logo: "/images/wangdoc.png",
 
   repo: "https://github.com/yzqbooks/wangdoc",
 

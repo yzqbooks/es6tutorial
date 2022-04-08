@@ -12,7 +12,7 @@ export default defineHopeConfig({
         rel: "icon",
         type: "image/png",
 
-        href: `/images/logo.png`,
+        href: `/wangdoc/images/wangdoc.png`,
       },
     ],
     [
