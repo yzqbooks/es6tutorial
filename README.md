@@ -1,7 +1,7 @@
 
 # 网道文档
 
-来源[https://github.com/wangdoc](https://github.com/wangdoc),由[yzqdev](https://github.com/yzqdev)重新梳理
+> 来源[https://github.com/wangdoc](https://github.com/wangdoc),由[yzqdev](https://github.com/yzqdev)重新梳理
 
 下面是wangdoc的介绍  
 网道（WangDoc.com）是一个文档网站，提供互联网软件开发文档，正在建设中。
