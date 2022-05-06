@@ -1,8 +1,8 @@
-import { defineThemeConfig } from "vuepress-theme-hope";
+import { hopeTheme } from "vuepress-theme-hope";
 import navbar from "./navbar";
 import sidebar from "./sidebar";
 
-export default defineThemeConfig({
+export default hopeTheme({
   hostname: "https://yzqbooks.github.io/wangdoc",
 
   author: {
