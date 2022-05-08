@@ -36,6 +36,10 @@ features:
     details: wangdoc教程
     icon: android
     link: https://yzqbooks.github.io/wangdoc
+  - title: cg教程
+    details: cg教程
+    icon: document
+    link: https://yzqdev.github.io/cg-tutor
 footer: MIT Licensed | Copyright © 2022-present yzqdev
 ---
 
