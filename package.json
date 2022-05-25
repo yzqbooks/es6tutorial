@@ -10,7 +10,7 @@
     "docs:dev": "vuepress dev docs  "
   },
   "devDependencies": {
-    "@vuepress/plugin-search": "next",
+    "vuepress2-plugin-full-text-search": "^0.2.0",
     "vuepress": "next",
     "vuepress-theme-hope": "next"
   }

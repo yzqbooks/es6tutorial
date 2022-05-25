@@ -1,6 +1,6 @@
 import theme from "./themeConfig";
-import {defineUserConfig} from "vuepress";
-import {searchPlugin} from "@vuepress/plugin-search";
+import { defineUserConfig } from "vuepress";
+import SearchPlugin from "vuepress2-plugin-full-text-search";
 export default defineUserConfig({
   base: "/wangdoc/",
 
@@ -41,14 +41,6 @@ export default defineUserConfig({
     },
   },
 
-  theme ,
-  plugins: [
-    searchPlugin({
-      locales: {
-        "/": {
-          placeholder: "搜索文档",
-        },
-      },
-    },)
-  ],
+  theme,
+  plugins: [SearchPlugin],
 });
