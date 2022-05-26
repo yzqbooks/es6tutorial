@@ -557,7 +557,7 @@ import.meta.scriptElement.dataset.foo
 
 ## JSON 模块
 
-import 命令目前只能用于加载 ES 模块，现在有一个[提案](https://github.com/tc39/proposal-json-modules)，允许加载 JSON 模块。
+`import` 命令目前只能用于加载 ES 模块，现在有一个[提案](https://github.com/tc39/proposal-json-modules)，允许加载 JSON 模块。
 
 假定有一个 JSON 模块文件`config.json`。
 
@@ -574,7 +574,7 @@ const response = await fetch('./config.json');
 const json = await response.json();
 ```
 
-import 命令能够直接加载 JSON 模块以后，就可以像下面这样写。
+`import` 命令能够直接加载 JSON 模块以后，就可以像下面这样写。
 
 ```javascript
 import configData from './config.json' assert { type: "json" };
@@ -598,4 +598,3 @@ import('./config.json', { assert: { type: 'json' } })
 ```javascript
 export { config } from './config.json' assert { type: 'json' };
 ```
-

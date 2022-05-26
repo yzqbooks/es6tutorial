@@ -5,7 +5,7 @@ $cur = $PWD
 $gitRepos = 'bash-tutorial', 'git-tutorial', 'node-tutorial', 'javascript-tutorial', 'clang-tutorial', 'css-tutorial', 'es6-tutorial', 'ssh-tutorial', 'html-tutorial', 'webapi-tutorial'
 # 这里填你的docs文件夹
  
-$dest = 'E:\myblogs\wangdoc\docs\'
+$dest = 'E:\myblogs\cs-docs\wangdoc\docs\'
 # 系统临时文件路径
 $tmpPath = $env:tmp + '\wang\'
 Write-Host  '设置临时文件路径'$tmpPath -ForegroundColor Cyan
@@ -34,6 +34,9 @@ function cloneOnlyDocs {
         Set-Location $item
     
         Write-Host '当前路径'$PWD -ForegroundColor Cyan
+        if (Test-Path $dest$item) {
+            Remove-Item -Path $dest$item <# Action to perform if the condition is true #>
+        }
         if (Test-Path ".git" ) {
             Write-Host  '已有git文件夹' -ForegroundColor Cyan
             switch ($item) {
@@ -47,9 +50,11 @@ function cloneOnlyDocs {
                     git pull origin master
                 }
             }
-            Write-Host '从docs复制到'$dest$item -ForegroundColor Cyan
-            # 注意下面的\文件夹分割
-            Copy-Item  -Path 'docs'-Destination  $dest$item -Recurse -Force
+            Write-Host "从"$PWD"复制到"$dest$item -ForegroundColor Red
+            # 注意下面的\文件夹分割 -Force 覆盖文件
+            Copy-Item   'docs'  -Destination  $dest$item  -Recurse -Force
+
+            Write-Host "复制完成" -ForegroundColor Green
             Set-Location ../
         }
         else {
@@ -71,8 +76,12 @@ function cloneOnlyDocs {
                     git pull origin master
                 }
             }
+            Write-Host "从"$PWD"复制到"$dest$item -ForegroundColor Red
             # 注意下面的\文件夹分割 -Force 覆盖文件
-            Copy-Item  -Path 'docs'  -Destination  $dest$item -Recurse -Force
+            Copy-Item   'docs'  -Destination  $dest$item  -Recurse -Force
+
+            Write-Host "复制完成" -ForegroundColor Green
+            # delTmpPath
             Set-Location ../
         }
     } 
