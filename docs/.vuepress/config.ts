@@ -1,46 +1,48 @@
 import theme from "./themeConfig";
 import { defineUserConfig } from "vuepress";
-import SearchPlugin from "vuepress2-plugin-full-text-search";
+import {searchProPlugin} from "vuepress-plugin-search-pro";
 export default defineUserConfig({
-  base: "/wangdoc/",
+  base: '/wangdoc/',
 
-  dest: "./dist",
+  dest: './dist',
 
   head: [
     [
-      "link",
+      'link',
       {
-        rel: "icon",
-        type: "image/png",
+        rel: 'icon',
+        type: 'image/png',
 
         href: `/wangdoc/images/wangdoc.png`,
       },
     ],
     [
-      "link",
+      'link',
       {
-        rel: "stylesheet",
-        href: "//at.alicdn.com/t/font_2410206_mfj6e1vbwo.css",
+        rel: 'stylesheet',
+        href: '//at.alicdn.com/t/font_2410206_mfj6e1vbwo.css',
       },
     ],
     [
-      "link",
+      'link',
       //我的iconfont库
       {
-        rel: "stylesheet",
-        href: "//at.alicdn.com/t/font_3267094_j92iwdcfcxp.css",
+        rel: 'stylesheet',
+        href: '//at.alicdn.com/t/font_3267094_j92iwdcfcxp.css',
       },
     ],
   ],
 
   locales: {
-    "/": {
-      lang: "zh-CN",
-      title: "wangdoc",
-      description: "wangdoc",
+    '/': {
+      lang: 'zh-CN',
+      title: 'wangdoc',
+      description: 'wangdoc',
     },
   },
 
   theme,
-  plugins: [SearchPlugin],
-});
+  plugins: [searchProPlugin({
+    indexContent:true
+  })],
+})
