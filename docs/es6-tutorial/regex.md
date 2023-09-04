@@ -376,7 +376,7 @@ JavaScript 语言的正则表达式，只支持先行断言（lookahead）和先
 
 ```javascript
 /(?<=\$)\d+/.exec('Benjamin Franklin is on the $100 bill')  // ["100"]
-/(?<!\$)\d+/.exec('it’s is worth about €90')                // ["90"]
+/(?<!\$)\d+/.exec('it’s worth about €90')                   // ["90"]
 ```
 
 上面的例子中，“后行断言”的括号之中的部分（`(?<=\$)`），也是不计入返回结果。
@@ -476,6 +476,41 @@ regex.test('ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩⅪⅫ') // true
 // 匹配所有的箭头字符
 const regexArrows = /^\p{Block=Arrows}+$/u;
 regexArrows.test('←↑→↓↔↕↖↗↘↙⇏⇐⇑⇒⇓⇔⇕⇖⇗⇘⇙⇧⇩') // true
+```
+
+## v 修饰符：Unicode 属性类的运算
+
+有时，需要向某个 Unicode 属性类添加或减少字符，即需要对属性类进行运算。现在有一个[提案](https://github.com/tc39/proposal-regexp-v-flag)，增加了 Unicode 属性类的运算功能。
+
+它提供两种形式的运算，一种是差集运算（A 集合减去 B 集合），另一种是交集运算。
+
+```javascript
+// 差集运算（A 减去 B）
+[A--B]
+
+// 交集运算（A 与 B 的交集）
+[A&&B]
+```
+
+上面两种写法中，A 和 B 要么是字符类（例如`[a-z]`），要么是 Unicode 属性类（例如`\p{ASCII}`）。
+
+而且，这种运算支持方括号之中嵌入方括号，即方括号的嵌套。
+
+```javascript
+// 方括号嵌套的例子
+[A--[0-9]]
+```
+
+这种运算的前提是，正则表达式必须使用新引入的`v`修饰符。前面说过，Unicode 属性类必须搭配`u`修饰符使用，这个`v`修饰符等于代替`u`，使用了它就不必再写`u`了。
+
+下面是一些例子。
+
+```javascript
+// 十进制字符去除 ASCII 码的0到9
+[\p{Decimal_Number}--[0-9]]
+
+// Emoji 字符去除 ASCII 码字符
+[\p{Emoji}--\p{ASCII}]
 ```
 
 ## 具名组匹配
@@ -594,54 +629,54 @@ RE_TWICE.test('abc!abc!abc') // true
 RE_TWICE.test('abc!abc!ab') // false
 ```
 
-## 正则匹配索引
+## d 修饰符：正则匹配索引
 
-正则匹配结果的开始位置和结束位置，目前获取并不是很方便。正则实例的`exec()`方法，返回结果有一个`index`属性，可以获取整个匹配结果的开始位置，但是如果包含组匹配，每个组匹配的开始位置，很难拿到。
+组匹配的结果，在原始字符串里面的开始位置和结束位置，目前获取并不是很方便。正则实例的`exec()`方法有一个`index`属性，可以获取整个匹配结果的开始位置。但是，组匹配的每个组的开始位置，很难拿到。
 
-现在有一个[第三阶段提案](https://github.com/tc39/proposal-regexp-match-Indices)，为`exec()`方法的返回结果加上`indices`属性，在这个属性上面可以拿到匹配的开始位置和结束位置。
+[ES2022](https://github.com/tc39/proposal-regexp-match-Indices) 新增了`d`修饰符，这个修饰符可以让`exec()`、`match()`的返回结果添加`indices`属性，在该属性上面可以拿到匹配的开始位置和结束位置。
 
 ```javascript
 const text = 'zabbcdef';
-const re = /ab/;
+const re = /ab/d;
 const result = re.exec(text);
 
 result.index // 1
 result.indices // [ [1, 3] ]
 ```
 
-上面例子中，`exec()`方法的返回结果`result`，它的`index`属性是整个匹配结果（`ab`）的开始位置，而它的`indices`属性是一个数组，成员是每个匹配的开始位置和结束位置的数组。由于该例子的正则表达式没有组匹配，所以`indices`数组只有一个成员，表示整个匹配的开始位置是`1`，结束位置是`3`。
+上面示例中，`exec()`方法的返回结果`result`，它的`index`属性是整个匹配结果（`ab`）的开始位置。由于正则表达式`re`有`d`修饰符，`result`现在就会多出一个`indices`属性。该属性是一个数组，它的每个成员还是一个数组，包含了匹配结果在原始字符串的开始位置和结束位置。由于上例的正则表达式`re`没有包含组匹配，所以`indices`数组只有一个成员，表示整个匹配的开始位置是`1`，结束位置是`3`。
 
-注意，开始位置包含在匹配结果之中，但是结束位置不包含在匹配结果之中。比如，匹配结果为`ab`，分别是原始字符串的第1位和第2位，那么结束位置就是第3位。
+注意，开始位置包含在匹配结果之中，相当于匹配结果的第一个字符的位置。但是，结束位置不包含在匹配结果之中，是匹配结果的下一个字符。比如，上例匹配结果的最后一个字符`b`的位置，是原始字符串的2号位，那么结束位置`3`就是下一个字符的位置。
 
 如果正则表达式包含组匹配，那么`indices`属性对应的数组就会包含多个成员，提供每个组匹配的开始位置和结束位置。
 
 ```javascript
 const text = 'zabbcdef';
-const re = /ab+(cd)/;
+const re = /ab+(cd)/d;
 const result = re.exec(text);
 
 result.indices // [ [ 1, 6 ], [ 4, 6 ] ]
 ```
 
-上面例子中，正则表达式包含一个组匹配，那么`indices`属性数组就有两个成员，第一个成员是整个匹配结果（`abbcd`）的开始位置和结束位置，第二个成员是组匹配（`cd`）的开始位置和结束位置。
+上面例子中，正则表达式`re`包含一个组匹配`(cd)`，那么`indices`属性数组就有两个成员，第一个成员是整个匹配结果（`abbcd`）的开始位置和结束位置，第二个成员是组匹配（`cd`）的开始位置和结束位置。
 
 下面是多个组匹配的例子。
 
 ```javascript
 const text = 'zabbcdef';
-const re = /ab+(cd(ef))/;
+const re = /ab+(cd(ef))/d;
 const result = re.exec(text);
 
 result.indices // [ [1, 8], [4, 8], [6, 8] ]
 ```
 
-上面例子中，正则表达式包含两个组匹配，所以`indices`属性数组就有三个成员。
+上面例子中，正则表达式`re`包含两个组匹配，所以`indices`属性数组就有三个成员。
 
 如果正则表达式包含具名组匹配，`indices`属性数组还会有一个`groups`属性。该属性是一个对象，可以从该对象获取具名组匹配的开始位置和结束位置。
 
 ```javascript
 const text = 'zabbcdef';
-const re = /ab+(?<Z>cd)/;
+const re = /ab+(?<Z>cd)/d;
 const result = re.exec(text);
 
 result.indices.groups // { Z: [ 4, 6 ] }
@@ -653,14 +688,14 @@ result.indices.groups // { Z: [ 4, 6 ] }
 
 ```javascript
 const text = 'zabbcdef';
-const re = /ab+(?<Z>ce)?/;
+const re = /ab+(?<Z>ce)?/d;
 const result = re.exec(text);
 
 result.indices[1] // undefined
 result.indices.groups['Z'] // undefined
 ```
 
-上面例子中，由于组匹配不成功，所以`indices`属性数组和`indices.groups`属性对象对应的组匹配成员都是`undefined`。
+上面例子中，由于组匹配`ce`不成功，所以`indices`属性数组和`indices.groups`属性对象对应的组匹配成员`Z`都是`undefined`。
 
 ## String.prototype.matchAll()
 

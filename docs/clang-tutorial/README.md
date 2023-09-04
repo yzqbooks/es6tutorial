@@ -1,1 +1,2 @@
 # clang-tutorial
+<AutoCatalog />

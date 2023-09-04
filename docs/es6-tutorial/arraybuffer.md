@@ -746,7 +746,7 @@ const dv = new DataView(buffer);
 - `DataView.prototype.byteLength`：返回占据的内存字节长度
 - `DataView.prototype.byteOffset`：返回当前视图从对应的 ArrayBuffer 对象的哪个字节开始
 
-`DataView`实例提供 8 个方法读取内存。
+`DataView`实例提供10个方法读取内存。
 
 - **`getInt8`**：读取 1 个字节，返回一个 8 位整数。
 - **`getUint8`**：读取 1 个字节，返回一个无符号的 8 位整数。
@@ -754,6 +754,8 @@ const dv = new DataView(buffer);
 - **`getUint16`**：读取 2 个字节，返回一个无符号的 16 位整数。
 - **`getInt32`**：读取 4 个字节，返回一个 32 位整数。
 - **`getUint32`**：读取 4 个字节，返回一个无符号的 32 位整数。
+- **`getBigInt64`**：读取 8 个字节，返回一个 64 位整数。
+- **`getBigUint64`**：读取 8 个字节，返回一个无符号的 64 位整数。
 - **`getFloat32`**：读取 4 个字节，返回一个 32 位浮点数。
 - **`getFloat64`**：读取 8 个字节，返回一个 64 位浮点数。
 
@@ -788,7 +790,7 @@ const v2 = dv.getUint16(3, false);
 const v3 = dv.getUint16(3);
 ```
 
-DataView 视图提供 8 个方法写入内存。
+DataView 视图提供10个方法写入内存。
 
 - **`setInt8`**：写入 1 个字节的 8 位整数。
 - **`setUint8`**：写入 1 个字节的 8 位无符号整数。
@@ -796,6 +798,8 @@ DataView 视图提供 8 个方法写入内存。
 - **`setUint16`**：写入 2 个字节的 16 位无符号整数。
 - **`setInt32`**：写入 4 个字节的 32 位整数。
 - **`setUint32`**：写入 4 个字节的 32 位无符号整数。
+- **`setBigInt64`**：写入 8 个字节的 64 位整数。
+- **`setBigUint64`**：写入 8 个字节的 64 位无符号整数。
 - **`setFloat32`**：写入 4 个字节的 32 位浮点数。
 - **`setFloat64`**：写入 8 个字节的 64 位浮点数。
 

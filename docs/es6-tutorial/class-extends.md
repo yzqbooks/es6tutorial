@@ -119,22 +119,9 @@ cp instanceof Point // true
 
 上面示例中，实例对象`cp`同时是`ColorPoint`和`Point`两个类的实例，这与 ES5 的行为完全一致。
 
-除了私有属性，父类的所有属性和方法，都会被子类继承，其中包括静态方法。
+## 私有属性和私有方法的继承
 
-```javascript
-class A {
-  static hello() {
-    console.log('hello world');
-  }
-}
-
-class B extends A {
-}
-
-B.hello()  // hello world
-```
-
-上面代码中，`hello()`是`A`类的静态方法，`B`继承`A`，也继承了`A`的静态方法。
+父类所有的属性和方法，都会被子类继承，除了私有的属性和方法。
 
 子类无法继承父类的私有属性，或者说，私有属性只能在定义它的 class 里面使用。
 
@@ -177,6 +164,64 @@ class Bar extends Foo {
 
 上面示例中，`getP()`是父类用来读取私有属性的方法，通过该方法，子类就可以读到父类的私有属性。
 
+## 静态属性和静态方法的继承
+
+父类的静态属性和静态方法，也会被子类继承。
+
+```javascript
+class A {
+  static hello() {
+    console.log('hello world');
+  }
+}
+
+class B extends A {
+}
+
+B.hello()  // hello world
+```
+
+上面代码中，`hello()`是`A`类的静态方法，`B`继承`A`，也继承了`A`的静态方法。
+
+注意，静态属性是通过软拷贝实现继承的。
+
+```javascript
+class A { static foo = 100; }
+class B extends A {
+  constructor() {
+    super();
+    B.foo--;
+  }
+}
+
+const b = new B();
+B.foo // 99
+A.foo // 100
+```
+
+上面示例中，`foo`是 A 类的静态属性，B 类继承了 A 类，因此也继承了这个属性。但是，在 B 类内部操作`B.foo`这个静态属性，影响不到`A.foo`，原因就是 B 类继承静态属性时，会采用浅拷贝，拷贝父类静态属性的值，因此`A.foo`和`B.foo`是两个彼此独立的属性。
+
+但是，由于这种拷贝是浅拷贝，如果父类的静态属性的值是一个对象，那么子类的静态属性也会指向这个对象，因为浅拷贝只会拷贝对象的内存地址。
+
+```javascript
+class A {
+  static foo = { n: 100 };
+}
+
+class B extends A {
+  constructor() {
+    super();
+    B.foo.n--;
+  }
+}
+
+const b = new B();
+B.foo.n // 99
+A.foo.n // 99
+```
+
+上面示例中，`A.foo`的值是一个对象，浅拷贝导致`B.foo`和`A.foo`指向同一个对象。所以，子类`B`修改这个对象的属性值，会影响到父类`A`。
+
 ## Object.getPrototypeOf()
 
 `Object.getPrototypeOf()`方法可以用来从子类上获取父类。
@@ -196,7 +241,7 @@ Object.getPrototypeOf(ColorPoint) === Point
 
 `super`这个关键字，既可以当作函数使用，也可以当作对象使用。在这两种情况下，它的用法完全不同。
 
-第一种情况，`super`作为函数调用时，代表父类的构造函数。ES6 要求，子类的构造函数必须执行一次`super`函数。
+第一种情况，`super`作为函数调用时，代表父类的构造函数。ES6 要求，子类的构造函数必须执行一次`super()`函数。
 
 ```javascript
 class A {}
@@ -208,9 +253,11 @@ class B extends A {
 }
 ```
 
-上面代码中，子类`B`的构造函数之中的`super()`，代表调用父类的构造函数。这是必须的，否则 JavaScript 引擎会报错。
+上面代码中，子类`B`的构造函数之中的`super()`，代表调用父类的构造函数。这是必须的，否则报错。
 
-注意，`super`虽然代表了父类`A`的构造函数，但是返回的是子类`B`的实例，即`super`内部的`this`指的是`B`的实例，因此`super()`在这里相当于`A.prototype.constructor.call(this)`。
+调用`super()`的作用是形成子类的`this`对象，把父类的实例属性和方法放到这个`this`对象上面。子类在调用`super()`之前，是没有`this`对象的，任何对`this`的操作都要放在`super()`的后面。
+
+注意，这里的`super`虽然代表了父类的构造函数，但是因为返回的是子类的`this`（即子类的实例对象），所以`super`内部的`this`代表子类的实例，而不是父类的实例，这里的`super()`相当于`A.prototype.constructor.call(this)`（在子类的`this`上运行父类的构造函数）。
 
 ```javascript
 class A {
@@ -227,7 +274,26 @@ new A() // A
 new B() // B
 ```
 
-上面代码中，`new.target`指向当前正在执行的函数。可以看到，在`super()`执行时，它指向的是子类`B`的构造函数，而不是父类`A`的构造函数。也就是说，`super()`内部的`this`指向的是`B`。
+上面示例中，`new.target`指向当前正在执行的函数。可以看到，在`super()`执行时（`new B()`），它指向的是子类`B`的构造函数，而不是父类`A`的构造函数。也就是说，`super()`内部的`this`指向的是`B`。
+
+不过，由于`super()`在子类构造方法中执行时，子类的属性和方法还没有绑定到`this`，所以如果存在同名属性，此时拿到的是父类的属性。
+
+```javascript
+class A {
+  name = 'A';
+  constructor() {
+    console.log('My name is ' + this.name);
+  }
+}
+
+class B extends A {
+  name = 'B';
+}
+
+const b = new B(); // My name is A
+```
+
+上面示例中，最后一行输出的是`A`，而不是`B`，原因就在于`super()`执行时，`B`的`name`属性还没有绑定到`this`，所以`this.name`拿到的是`A`类的`name`属性。
 
 作为函数时，`super()`只能用在子类的构造函数之中，用在其他地方就会报错。
 

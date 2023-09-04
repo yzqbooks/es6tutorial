@@ -316,19 +316,19 @@ const userAge = getAgeFromUser(await fetchUserById(userId));
 
 ## Math.signbit()
 
-`Math.sign()`用来判断一个值的正负，但是如果参数是`-0`，它会返回`-0`。
-
-```javascript
-Math.sign(-0) // -0
-```
-
-这导致对于判断符号位的正负，`Math.sign()`不是很有用。JavaScript 内部使用 64 位浮点数（国际标准 IEEE 754）表示数值，IEEE 754 规定第一位是符号位，`0`表示正数，`1`表示负数。所以会有两种零，`+0`是符号位为`0`时的零值，`-0`是符号位为`1`时的零值。实际编程中，判断一个值是`+0`还是`-0`非常麻烦，因为它们是相等的。
+JavaScript 内部使用64位浮点数（国际标准 IEEE 754）表示数值。IEEE 754 规定，64位浮点数的第一位是符号位，`0`表示正数，`1`表示负数。所以会有两种零，`+0`是符号位为`0`时的零，`-0`是符号位为`1`时的零。实际编程中，判断一个值是`+0`还是`-0`非常麻烦，因为它们是相等的。
 
 ```javascript
 +0 === -0 // true
 ```
 
-目前，有一个[提案](http://jfbastien.github.io/papers/Math.signbit.html)，引入了`Math.signbit()`方法判断一个数的符号位是否设置了。
+ES6 新增的`Math.sign()`方法，只能用来判断数值的正负，对于判断数值的符号位用处不大。因为如果参数是`-0`，它会返回`-0`，还是不能直接知道符号位是`1`还是`0`。
+
+```javascript
+Math.sign(-0) // -0
+```
+
+目前，有一个[提案](https://github.com/tc39/proposal-Math.signbit)，引入了`Math.signbit()`方法判断一个数的符号位是否设置了。
 
 ```javascript
 Math.signbit(2) //false
@@ -348,7 +348,7 @@ Math.signbit(-0) //true
 
 ## 双冒号运算符
 
-箭头函数可以绑定`this`对象，大大减少了显式绑定`this`对象的写法（`call`、`apply`、`bind`）。但是，箭头函数并不适用于所有场合，所以现在有一个[提案](https://github.com/zenparsing/es-function-bind)，提出了“函数绑定”（function bind）运算符，用来取代`call`、`apply`、`bind`调用。
+箭头函数可以绑定`this`对象，大大减少了显式绑定`this`对象的写法（`call()`、`apply()`、`bind()`）。但是，箭头函数并不适用于所有场合，所以现在有一个[提案](https://github.com/zenparsing/es-function-bind)，提出了“函数绑定”（function bind）运算符，用来取代`call()`、`apply()`、`bind()`调用。
 
 函数绑定运算符是并排的两个冒号（`::`），双冒号左边是一个对象，右边是一个函数。该运算符会自动将左边的对象，作为上下文环境（即`this`对象），绑定到右边的函数上面。
 
@@ -482,82 +482,9 @@ class FakeWindow extends Realm {
 
 上面代码中，`FakeWindow`模拟了一个假的顶层对象`window`。
 
-## `#!`命令
-
-Unix 的命令行脚本都支持`#!`命令，又称为 Shebang 或 Hashbang。这个命令放在脚本的第一行，用来指定脚本的执行器。
-
-比如 Bash 脚本的第一行。
-
-```bash
-#!/bin/sh
-```
-
-Python 脚本的第一行。
-
-```python
-#!/usr/bin/env python
-```
-
-现在有一个[提案](https://github.com/tc39/proposal-hashbang)，为 JavaScript 脚本引入了`#!`命令，写在脚本文件或者模块文件的第一行。
-
-```javascript
-// 写在脚本文件第一行
-#!/usr/bin/env node
-'use strict';
-console.log(1);
-
-// 写在模块文件第一行
-#!/usr/bin/env node
-export {};
-console.log(1);
-```
-
-有了这一行以后，Unix 命令行就可以直接执行脚本。
-
-```bash
-# 以前执行脚本的方式
-$ node hello.js
-
-# hashbang 的方式
-$ ./hello.js
-```
-
-对于 JavaScript 引擎来说，会把`#!`理解成注释，忽略掉这一行。
-
-## import.meta
-
-开发者使用一个模块时，有时需要知道模板本身的一些信息（比如模块的路径）。现在有一个[提案](https://github.com/tc39/proposal-import-meta)，为 import 命令添加了一个元属性`import.meta`，返回当前模块的元信息。
-
-`import.meta`只能在模块内部使用，如果在模块外部使用会报错。
-
-这个属性返回一个对象，该对象的各种属性就是当前运行的脚本的元信息。具体包含哪些属性，标准没有规定，由各个运行环境自行决定。一般来说，`import.meta`至少会有下面两个属性。
-
-**（1）import.meta.url**
-
-`import.meta.url`返回当前模块的 URL 路径。举例来说，当前模块主文件的路径是`https://foo.com/main.js`，`import.meta.url`就返回这个路径。如果模块里面还有一个数据文件`data.txt`，那么就可以用下面的代码，获取这个数据文件的路径。
-
-```javascript
-new URL('data.txt', import.meta.url)
-```
-
-注意，Node.js 环境中，`import.meta.url`返回的总是本地路径，即是`file:URL`协议的字符串，比如`file:///home/user/foo.js`。
-
-**（2）import.meta.scriptElement**
-
-`import.meta.scriptElement`是浏览器特有的元属性，返回加载模块的那个`<script>`元素，相当于`document.currentScript`属性。
-
-```javascript
-// HTML 代码为
-// <script type="module" src="my-module.js" data-foo="abc"></script>
-
-// my-module.js 内部执行下面的代码
-import.meta.scriptElement.dataset.foo
-// "abc"
-```
-
 ## JSON 模块
 
-`import` 命令目前只能用于加载 ES 模块，现在有一个[提案](https://github.com/tc39/proposal-json-modules)，允许加载 JSON 模块。
+import 命令目前只能用于加载 ES 模块，现在有一个[提案](https://github.com/tc39/proposal-json-modules)，允许加载 JSON 模块。
 
 假定有一个 JSON 模块文件`config.json`。
 
@@ -574,7 +501,7 @@ const response = await fetch('./config.json');
 const json = await response.json();
 ```
 
-`import` 命令能够直接加载 JSON 模块以后，就可以像下面这样写。
+import 命令能够直接加载 JSON 模块以后，就可以像下面这样写。
 
 ```javascript
 import configData from './config.json' assert { type: "json" };
@@ -598,3 +525,4 @@ import('./config.json', { assert: { type: 'json' } })
 ```javascript
 export { config } from './config.json' assert { type: 'json' };
 ```
+

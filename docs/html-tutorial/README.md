@@ -1,1 +1,2 @@
 # html-tutorial
+<AutoCatalog />
