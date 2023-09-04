@@ -1,0 +1,4 @@
+import{_ as e}from"./plugin-vue_export-helper-c27b6911.js";import{o as a,c as i,e as t}from"./app-bede4f5a.js";const n={},r=t(`<h1 id="git-merge" tabindex="-1"><a class="header-anchor" href="#git-merge" aria-hidden="true">#</a> git merge</h1><p>将当前分支合并到指定分支。</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>
+$ <span class="token function">git</span> merge develop
+
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>将当前分支与develop分支合并，产生的新的commit对象有两个父节点。</p><p>如果“指定分支”本身是当前分支的一个直接子节点，则会产生fast-forward合并，即合并不会产生新的节点，只是让当前分支指向“指定分支”的最新commit。</p><p>Git合并所采用的方法是Three-way merge，及合并的时候除了要合併的兩個檔案，還加上它们共同的父节点。这样可以大大減少人為處理 conflict 的情況。如果采用two-way merge，則只用兩個檔案進行合併（svn默认就是这种合并方法。）</p>`,6),s=[r];function c(d,o){return a(),i("div",null,s)}const p=e(n,[["render",c],["__file","git-merge.html.vue"]]);export{p as default};

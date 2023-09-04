@@ -1,0 +1,9 @@
+import{_ as a}from"./plugin-vue_export-helper-c27b6911.js";import{o as s,c as n,e}from"./app-bede4f5a.js";const t={},i=e(`<h1 id="git-tag" tabindex="-1"><a class="header-anchor" href="#git-tag" aria-hidden="true">#</a> git tag</h1><p><code>git tag</code>命令用于为 commit 打标签。Tag 分两种：普通tag和注解tag。只有annotated tag 才會產生 object。</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>$ <span class="token function">git</span> tag tmp <span class="token comment"># 生成.git/refs/tags/tmp</span>
+$ <span class="token function">git</span> tag <span class="token parameter variable">-a</span> release
+$ <span class="token function">git</span> tag <span class="token parameter variable">-a</span> <span class="token punctuation">[</span>VERSION<span class="token punctuation">]</span> <span class="token parameter variable">-m</span> <span class="token string">&quot;released [VERSION]&quot;</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div><p>上面代码表示为当前commit打上一个带注解的标签，标签名为release。</p><p>普通标签的写法。</p><div class="language-bash line-numbers-mode" data-ext="sh"><pre class="language-bash"><code>$ <span class="token function">git</span> tag <span class="token number">1.0</span>.0
+$ <span class="token function">git</span> push <span class="token parameter variable">--tags</span>
+
+$ <span class="token function">git</span> tag v0.0.1
+$ <span class="token function">git</span> push origin master <span class="token parameter variable">--tags</span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>`,6),c=[i];function l(r,o){return s(),n("div",null,c)}const g=a(t,[["render",l],["__file","git-tag.html.vue"]]);export{g as default};

@@ -1,0 +1,5 @@
+
+User-agent:*
+Disallow:
+
+Sitemap: https://yzqbooks.github.io/wangdoc/wangdoc/sitemap.xml
